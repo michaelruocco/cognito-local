@@ -1,3 +1,42 @@
+# [2.0.0](https://github.com/michaelruocco/cognito-local/compare/v1.2.1...v2.0.0) (2025-07-13)
+
+### Bug Fixes
+
+* sub as username when using emails ([045f507](https://github.com/michaelruocco/cognito-local/commit/045f5074dd331e572a0f9aa8faea9d81f44d2659))
+
+
+* fix!: user pool creation race conditions ([69ee1e1](https://github.com/michaelruocco/cognito-local/commit/69ee1e17f9daa2872660f33c538ee5bdf5443ef5))
+
+
+### Features
+
+* **api:** support https ([c23eefe](https://github.com/michaelruocco/cognito-local/commit/c23eefec0becf3423ab618414039022526b59c5e))
+
+
+### BREAKING CHANGES
+
+* It's possible that users may have been stored with
+their email address as their Username in the cognito-local database;
+this was incorrect and shouldn't have happened. You may need to recreate
+any users who were incorrectly saved with their email address as their
+username.
+* You must create a User Pool before using it (by calling
+createUserPool). Previously, User Pools would be created on-demand.
+
+User Pools (and their associated databases) used to be created lazily
+when first accessed, this was intended to to allow low-touch setup of
+cognito-local by creating user pools with default options if they don't
+exist, but it has been a source of obscure corruption issues for a
+while. It's been possible to create race conditions by making requests
+to cognito-local in parallel before a User Pool was created, and those
+parallel requests would stomp on each other by creating multiple
+databases.
+
+This change removes the laziness: Any existing User Pools will be parsed
+when cognito-local first starts, and new User Pools are created when
+createUserPool is called. Any attempts to access User Pools which don't
+exist will fail with a ResourceNotFound error.
+
 # [5.0.0](https://github.com/jagregory/cognito-local/compare/v4.1.0...v5.0.0) (2025-03-05)
 
 

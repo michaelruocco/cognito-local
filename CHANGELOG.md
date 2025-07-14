@@ -1,3 +1,12 @@
+## [2.0.2](https://github.com/michaelruocco/cognito-local/compare/v2.0.1...v2.0.2) (2025-07-14)
+
+
+### Bug Fixes
+
+* broken smoke test ([ae1f7a4](https://github.com/michaelruocco/cognito-local/commit/ae1f7a4ec3276aa02d5418acd798e4cf4dc7fc0a))
+* docker build warnings ([80a0130](https://github.com/michaelruocco/cognito-local/commit/80a01308aec85161463f332719e2089641ec444a))
+* use docker host ip ([de75783](https://github.com/michaelruocco/cognito-local/commit/de7578393ad378b2c3fca6d8f7c4ea6330736726))
+
 ## [2.0.1](https://github.com/michaelruocco/cognito-local/compare/v2.0.0...v2.0.1) (2025-07-14)
 
 

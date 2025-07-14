@@ -424,6 +424,7 @@ export class LambdaService implements Lambda {
             codeParameter: event.codeParameter,
             usernameParameter: event.usernameParameter,
             userAttributes: event.userAttributes,
+            linkParameter: "",
           },
           response: {
             smsMessage: "",

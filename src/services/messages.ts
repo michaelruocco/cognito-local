@@ -10,9 +10,9 @@ const AWS_ADMIN_CLIENT_ID = "CLIENT_ID_NOT_APPLICABLE";
 
 export interface Message {
   __code?: string; // not really part of the message, but we pass it around for convenience logging to the console
-  emailMessage?: string;
-  emailSubject?: string;
-  smsMessage?: string;
+  emailMessage?: string | null;
+  emailSubject?: string | null;
+  smsMessage?: string | null;
 }
 
 type MessageSource =

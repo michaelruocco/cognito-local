@@ -73,14 +73,18 @@ export const CustomMessage =
         userPoolId,
       });
 
+      const emailMessage = response.emailMessage
+        ?.replace(AWS_CODE_PARAMETER, code)
+        .replace(AWS_USERNAME_PARAMETER, username);
+
+      const smsMessage = response.smsMessage
+        ?.replace(AWS_CODE_PARAMETER, code)
+        .replace(AWS_USERNAME_PARAMETER, username);
+
       return {
-        emailMessage: response.emailMessage
-          ?.replace(AWS_CODE_PARAMETER, code)
-          .replace(AWS_USERNAME_PARAMETER, username),
+        emailMessage: emailMessage ?? null,
         emailSubject: response.emailSubject,
-        smsMessage: response.smsMessage
-          ?.replace(AWS_CODE_PARAMETER, code)
-          .replace(AWS_USERNAME_PARAMETER, username),
+        smsMessage: smsMessage ?? null,
       };
     } catch (ex) {
       ctx.logger.error(ex);

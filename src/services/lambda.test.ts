@@ -559,6 +559,7 @@ describe("Lambda function invoker", () => {
               clientMetadata: {
                 client: "metadata",
               },
+              linkParameter: "",
             },
             response: {
               smsMessage: "",

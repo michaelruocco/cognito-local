@@ -1,3 +1,10 @@
+## [2.0.1](https://github.com/michaelruocco/cognito-local/compare/v2.0.0...v2.0.1) (2025-07-14)
+
+
+### Bug Fixes
+
+* bump commit to trigger release ([27f5d00](https://github.com/michaelruocco/cognito-local/commit/27f5d007facf7b1ee7ef6ff281080ea3b184091c))
+
 # [2.0.0](https://github.com/michaelruocco/cognito-local/compare/v1.2.1...v2.0.0) (2025-07-13)
 
 ### Bug Fixes

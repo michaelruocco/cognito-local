@@ -17,7 +17,7 @@ COPY --from=builder /app/lib .
 
 # bindings
 EXPOSE 9229
-ENV HOST 0.0.0.0
-ENV PORT 9229
+ENV HOST=0.0.0.0
+ENV PORT=9229
 VOLUME /app/.cognito
 ENTRYPOINT ["node", "/app/start.js"]

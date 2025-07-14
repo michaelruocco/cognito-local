@@ -41,9 +41,11 @@ const getHostname = () => {
   if (hostname) {
     return hostname;
   }
-  const externalIp = getExternalNetworkInterfaceAddress();
-  if (externalIp) {
-    return externalIp;
+  if (process.env.USE_EXTERNAL_IP_AS_HOSTNAME) {
+    const externalIp = getExternalNetworkInterfaceAddress();
+    if (externalIp) {
+      return externalIp;
+    }
   }
   return "localhost";
 };

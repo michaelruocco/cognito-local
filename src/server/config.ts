@@ -6,6 +6,7 @@ import { TokenConfig } from "../services/tokenGenerator";
 import mergeWith from "lodash.mergewith";
 import { KMSConfig } from "../services/crypto";
 import type { ServerOptions } from "./server";
+import os from "os";
 
 export type UserPoolDefaults = Omit<
   UserPool,
@@ -21,7 +22,34 @@ export interface Config {
   TokenConfig: TokenConfig;
 }
 
-const hostname = process.env.ISSUER_HOST ?? "localhost";
+const getExternalNetworkInterfaceAddress = () => {
+  const networkInterfaces = os.networkInterfaces();
+  for (const key in networkInterfaces) {
+    const networkInterface = networkInterfaces[key];
+    const externalInterfaceAddress = networkInterface?.find(
+      (i) => i.internal == false
+    )?.address;
+    if (externalInterfaceAddress) {
+      return externalInterfaceAddress;
+    }
+  }
+  return undefined;
+};
+
+const getHostname = () => {
+  const hostname = process.env.ISSUER_HOST;
+  if (hostname) {
+    return hostname;
+  }
+  const externalIp = getExternalNetworkInterfaceAddress();
+  if (externalIp) {
+    return externalIp;
+  }
+  return "localhost";
+};
+
+const hostname = getHostname();
+const issuerHostname = process.env.ISSUER_HOST ?? "localhost";
 const port = parseInt(process.env.PORT ?? "9229", 10);
 
 export const DefaultConfig: Config = {
@@ -37,7 +65,7 @@ export const DefaultConfig: Config = {
     UsernameAttributes: ["email"],
   },
   TokenConfig: {
-    IssuerDomain: `http://${hostname}:${port}`,
+    IssuerDomain: `http://${issuerHostname}:${port}`,
   },
   KMSConfig: {
     credentials: {

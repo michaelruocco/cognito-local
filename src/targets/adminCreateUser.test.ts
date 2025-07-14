@@ -8,7 +8,6 @@ import * as TDB from "../__tests__/testDataBuilder";
 import { InvalidParameterError, UsernameExistsError } from "../errors";
 import { Messages, UserPoolService } from "../services";
 import { AdminCreateUser, AdminCreateUserTarget } from "./adminCreateUser";
-import { Config, DefaultConfig } from "../server/config";
 
 const originalDate = new Date();
 
@@ -16,16 +15,13 @@ describe("AdminCreateUser target", () => {
   let adminCreateUser: AdminCreateUserTarget;
   let mockUserPoolService: jest.Mocked<UserPoolService>;
   let mockMessages: jest.Mocked<Messages>;
-  let config: Config;
 
   beforeEach(() => {
     mockUserPoolService = newMockUserPoolService();
     mockMessages = newMockMessages();
-    config = DefaultConfig;
     adminCreateUser = AdminCreateUser({
       cognito: newMockCognitoService(mockUserPoolService),
       clock: new ClockFake(originalDate),
-      config,
       messages: mockMessages,
     });
   });
@@ -154,8 +150,6 @@ describe("AdminCreateUser target", () => {
       });
 
       it("fails for user without email attribute", async () => {
-        config.UserPoolDefaults.UsernameAttributes = [];
-
         await expect(
           adminCreateUser(TestContext, {
             DesiredDeliveryMediums: ["EMAIL"],
@@ -340,8 +334,6 @@ describe("AdminCreateUser target", () => {
       });
 
       it("fails for users without phone_number or email", async () => {
-        config.UserPoolDefaults.UsernameAttributes = [];
-
         await expect(
           adminCreateUser(TestContext, {
             DesiredDeliveryMediums: ["EMAIL", "SMS"],

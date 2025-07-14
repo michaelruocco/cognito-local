@@ -30,10 +30,7 @@ export type AdminCreateUserTarget = Target<
   AdminCreateUserResponse
 >;
 
-type AdminCreateUserServices = Pick<
-  Services,
-  "clock" | "cognito" | "messages" | "config"
->;
+type AdminCreateUserServices = Pick<Services, "clock" | "cognito" | "messages">;
 
 const selectAppropriateDeliveryMethod = (
   desiredDeliveryMediums: DeliveryMediumListType,
@@ -100,7 +97,6 @@ export const AdminCreateUser =
     clock,
     cognito,
     messages,
-    config,
   }: AdminCreateUserServices): AdminCreateUserTarget =>
   async (ctx, req) => {
     const userPool = await cognito.getUserPool(ctx, req.UserPoolId);
